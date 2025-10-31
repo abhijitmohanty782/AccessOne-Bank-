@@ -1,0 +1,34 @@
+Product Name: Health Insurance
+Category: Insurance
+Premium: ₹2,000 - ₹25,000 per year
+Coverage Amount: ₹1,00,000 - ₹50,00,000
+Policy Term: 1 year (renewable)
+Entry Age: 18 - 65 years
+Eligibility Criteria:
+- Age: 18-65 years
+- Indian resident
+- No pre-existing critical illnesses (waiting period applies)
+- Valid identity and address proof
+Required Documents:
+- Identity proof (Aadhaar, PAN, Voter ID)
+- Address proof (Utility bill, Bank statement)
+- Medical reports (if required)
+- Family details (for family floater)
+Key Features:
+- Cashless hospitalization
+- Pre and post hospitalization expenses
+- Day care procedures covered
+- Maternity benefits (after 2 years)
+- Annual health check-up
+- Tax benefits under Section 80D
+- Network hospitals across India
+- 24x7 customer support
+- No claim bonus
+- Restoration benefit
+Special Offers:
+- 5% premium discount for women
+- 10% premium discount for online purchase
+- Family discount available
+- No medical test for coverage up to ₹5,00,000
+- Free health check-up
+- Wellness program benefits

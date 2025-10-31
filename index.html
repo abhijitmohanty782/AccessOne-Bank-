@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unified Banking Assistant</title>
+  <!-- 1. Load Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    /* Custom scrollbar for a cleaner look */
+    #messages::-webkit-scrollbar {
+      width: 6px;
+    }
+    #messages::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    #messages::-webkit-scrollbar-thumb {
+      background: #c5c5c5;
+      border-radius: 10px;
+    }
+    #messages::-webkit-scrollbar-thumb:hover {
+      background: #a8a8a8;
+    }
+  </style>
+</head>
+<body class="font-sans bg-gray-100">
+
+  <div class="min-h-screen flex items-center justify-center p-4">
+    <!-- 2. Main Chat Card -->
+    <div class="w-full max-w-2xl bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col">
+      
+      <!-- 3. Service Selector Tabs -->
+      <div class="flex border-b border-gray-200">
+        <button id="tab-chatbot" 
+                class="tab flex-1 py-4 px-6 text-center font-semibold text-blue-600 border-b-2 border-blue-600 focus:outline-none"
+                onclick="handleTabClick('chatbot')">
+          Chatbot
+        </button>
+        <button id="tab-helper" 
+                class="tab flex-1 py-4 px-6 text-center font-semibold text-gray-500 border-b-2 border-transparent hover:bg-gray-50 focus:outline-none"
+                onclick="handleTabClick('helper')">
+          Navigation Helper
+        </button>
+      </div>
+
+      <!-- 4. Messages Area -->
+      <div class="flex-1 p-6 h-96 overflow-y-auto space-y-4" id="messages">
+        <!-- Welcome Message -->
+        <div class="msg bot bg-gray-200 text-gray-800 p-3 rounded-lg max-w-xs mr-auto">
+          <p id="welcome-text">Hi! Ask me about loans, insurance, or other banking products.</p>
+        </div>
+      </div>
+
+      <!-- 5. Input Box -->
+      <div class="p-4 bg-gray-50 border-t border-gray-200 flex items-center">
+        <input type="text" 
+               id="userInput" 
+               placeholder="Ask me about loans or insurance..." 
+               class="flex-1 border-gray-300 rounded-lg p-3 focus:border-blue-500 focus:ring-1 focus:ring-blue-500" />
+        <button onclick="sendMessage()" 
+                class="ml-3 px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-colors duration-200">
+          Send
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const messages = document.getElementById("messages");
+    const userInput = document.getElementById("userInput");
+    const welcomeText = document.getElementById("welcome-text");
+    const tabs = {
+      chatbot: document.getElementById("tab-chatbot"),
+      helper: document.getElementById("tab-helper"),
+    };
+
+    let chatHistory = [];
+    let currentService = "chatbot"; // Default service
+
+    // Function to switch services
+    function handleTabClick(service) {
+      currentService = service;
+      chatHistory = []; // Reset history
+      messages.innerHTML = ""; // Clear messages
+
+      // Update tab styles
+      if (service === "chatbot") {
+        tabs.chatbot.className = "tab flex-1 py-4 px-6 text-center font-semibold text-blue-600 border-b-2 border-blue-600 focus:outline-none";
+        tabs.helper.className = "tab flex-1 py-4 px-6 text-center font-semibold text-gray-500 border-b-2 border-transparent hover:bg-gray-50 focus:outline-none";
+        userInput.placeholder = "Ask me about loans or insurance...";
+        appendMessage("Hi! Ask me about loans, insurance, or other banking products.", true);
+      } else {
+        tabs.helper.className = "tab flex-1 py-4 px-6 text-center font-semibold text-blue-600 border-b-2 border-blue-600 focus:outline-none";
+        tabs.chatbot.className = "tab flex-1 py-4 px-6 text-center font-semibold text-gray-500 border-b-2 border-transparent hover:bg-gray-50 focus:outline-none";
+        userInput.placeholder = "Tell me what you want to do (e.g., 'open an account')...";
+        appendMessage("Hi! Tell me what you're looking for, and I'll find the right page for you.", true);
+      }
+    }
+
+    // Function to add a message to the chat
+    function appendMessage(htmlContent, isBot) {
+      const div = document.createElement("div");
+      div.className = "msg " + (isBot 
+        ? "bot bg-gray-200 text-gray-800 p-3 rounded-lg max-w-md mr-auto" 
+        : "user bg-blue-600 text-white p-3 rounded-lg max-w-md ml-auto");
+      
+      // Use innerHTML to render formatted links from the helper
+      div.innerHTML = htmlContent;
+      messages.appendChild(div);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    // Function to send a message
+    async function sendMessage() {
+      const query = userInput.value.trim();
+      if (!query) return;
+
+      appendMessage(query, false); // Append user's plain text query
+      userInput.value = "";
+      
+      // Add a thinking indicator
+      const thinking = document.createElement("div");
+      thinking.id = "thinking";
+      thinking.className = "msg bot bg-gray-200 text-gray-800 p-3 rounded-lg max-w-xs mr-auto";
+      thinking.innerHTML = `<div class="flex items-center space-x-2">
+          <div class="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style="animation-delay: 0.1s;"></div>
+          <div class="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style="animation-delay: 0.2s;"></div>
+          <div class="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style="animation-delay: 0.3s;"></div>
+        </div>`;
+      messages.appendChild(thinking);
+      messages.scrollTop = messages.scrollHeight;
+
+      // 6. !! IMPORTANT: Define endpoints
+      // I'm GUESSING your routes. Change these if they are incorrect!
+      const API_HOST = "";
+      let endpoint = "";
+      
+      if (currentService === "chatbot") {
+        endpoint = `${API_HOST}/chatbot/chat`; // <-- GUESS #1
+      } else {
+        endpoint = `${API_HOST}/helper/chat`; // <-- GUESS #2
+      }
+
+      try {
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            query: query,
+            history: chatHistory
+          }),
+        });
+        
+        const data = await response.json();
+        messages.removeChild(thinking); // Remove thinking indicator
+
+        // 7. Handle DIFFERENT responses
+        if (currentService === "chatbot") {
+          const answer = data.answer || "Sorry, I couldn't find an answer.";
+          appendMessage(answer, true);
+          chatHistory.push(query, answer); // Add to history for chatbot
+        } 
+        else { // currentService is 'helper'
+          if (data.item && data.item.url) {
+            // Format the helper's link response
+            const botHtml = `
+              <strong>Here's what I found for "${data.item.key_name}":</strong>
+              <p class="text-sm mt-1 mb-2">${data.item.description}</p>
+              <a href="${data.item.url}" target="_blank" 
+                 class="inline-block bg-blue-500 text-white font-semibold px-3 py-1 rounded-md text-sm hover:bg-blue-600">
+                Go to page &rarr;
+              </a>
+            `;
+            appendMessage(botHtml, true);
+          } else {
+            appendMessage("Sorry, I couldn't find a navigation link for that.", true);
+          }
+          // Helper doesn't really use history, so we don't add to it
+        }
+
+      } catch (err) {
+        messages.removeChild(thinking);
+        appendMessage("<strong>Error:</strong> " + err.message + 
+          "<br><small>Could not connect to the backend. Is it running?</small>", true);
+      }
+    }
+
+    // Enter key sends message
+    userInput.addEventListener("keypress", function (e) {
+      if (e.key === "Enter") sendMessage();
+    });
+
+    // Initialize with the chatbot welcome message
+    handleTabClick('chatbot');
+  </script>
+
+</body>
+</html>

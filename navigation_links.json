@@ -1,0 +1,78 @@
+{
+  "accounts": {
+    "url": "http://localhost:3001/accounts",
+    "description": "Displays user account details like account number, balance, and transaction history."
+  },
+  "apply for a new card": {
+    "url": "http://localhost:3001/cards/apply",
+    "description": "Allows users to apply for new debit or credit cards online by filling out a simple form."
+  },
+  "apply for a car loan": {
+    "url": "http://localhost:3001/loans/car",
+    "description": "Page to apply for a car loan; collects details like car type, loan amount, and tenure."
+  },
+  "apply for educational loan": {
+    "url": "http://localhost:3001/loans/education",
+    "description": "Used by students or parents to apply for education loans, including course and institution details."
+  },
+  "apply for general insurance": {
+    "url": "http://localhost:3001/insurance/general",
+    "description": "Lets users purchase or apply for general insurance policies for property, health, or travel."
+  },
+  "apply for home loan": {
+    "url": "http://localhost:3001/loans/home",
+    "description": "Dedicated page for home loan applications; includes loan amount, property details, and EMI options."
+  },
+  "apply for life insurance": {
+    "url": "http://localhost:3001/insurance/life",
+    "description": "For applying to life insurance plans with premium, policy term, and beneficiary details."
+  },
+  "apply for personal loan": {
+    "url": "http://localhost:3001/loans/personal",
+    "description": "Handles personal loan applications, verifying user eligibility and loan requirements."
+  },
+  "apply for block the card": {
+    "url": "http://localhost:3001/cards/block",
+    "description": "Allows users to block their debit or credit card in case of loss or fraud instantly."
+  },
+  "request for cheque book": {
+    "url": "http://localhost:3001/services/cheque-book",
+    "description": "Users can request a new cheque book by selecting account and delivery address."
+  },
+  "see the credit card details": {
+    "url": "http://localhost:3001/cards/details",
+    "description": "Displays user’s existing credit card details, usage summary, and payment due information."
+  },
+  "apply for fixed deposit": {
+    "url": "http://localhost:3001/fixed-deposit",
+    "description": "Enables users to open or manage Fixed Deposit accounts and calculate interest."
+  },
+  "for purchasing the gold": {
+    "url": "http://localhost:3001/investments/gold",
+    "description": "Lets users buy or invest in digital gold with real-time price updates."
+  },
+  "investments": {
+    "url": "http://localhost:3001/investments",
+    "description": "Displays all user investments like mutual funds, fixed deposits, and recurring deposits."
+  },
+  "loans": {
+    "url": "http://localhost:3001/loans",
+    "description": "Summary of all user loans (car, home, personal) with EMI and repayment status."
+  },
+  "mutual funds": {
+    "url": "http://localhost:3001/mutual-funds",
+    "description": "Shows mutual fund plans, allows users to invest, redeem, or track NAV performance."
+  },
+  "nominee update details": {
+    "url": "http://localhost:3001/services/nominee-update",
+    "description": "Allows users to update or add a nominee for their bank accounts or insurance policies."
+  },
+  "payments": {
+    "url": "http://localhost:3001/payments",
+    "description": "Central payment dashboard for transferring money, paying bills, and checking payment history."
+  },
+  "services": {
+    "url": "http://localhost:3001/services",
+    "description": "General banking services such as card replacement, address change, or account upgrades."
+  }
+}

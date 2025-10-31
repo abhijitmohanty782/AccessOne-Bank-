@@ -1,0 +1,33 @@
+Product Name: Life Insurance
+Category: Insurance
+Premium: ₹500 - ₹50,000 per month
+Coverage Amount: ₹1,00,000 - ₹5,00,00,000
+Policy Term: 10 - 30 years
+Entry Age: 18 - 65 years
+Eligibility Criteria:
+- Age: 18-65 years
+- Good health condition
+- No pre-existing critical illnesses
+- Regular income source
+- Valid identity and address proof
+Required Documents:
+- Identity proof (Aadhaar, PAN, Voter ID)
+- Address proof (Utility bill, Bank statement)
+- Income proof (Salary slips, ITR, Bank statements)
+- Medical reports (if required)
+- Nominee details
+Key Features:
+- Life coverage with maturity benefits
+- Accidental death benefit
+- Terminal illness benefit
+- Premium waiver benefit
+- Tax benefits under Section 80C and 10(10D)
+- Loan against policy
+- Surrender value
+- Riders available (Critical illness, Accidental death)
+Special Offers:
+- 5% premium discount for women
+- 10% premium discount for online purchase
+- Free health check-up
+- No medical test for coverage up to ₹25,00,000
+- Family discount available

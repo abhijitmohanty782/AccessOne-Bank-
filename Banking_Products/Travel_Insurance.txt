@@ -1,0 +1,37 @@
+Product Name: Travel Insurance
+Category: Insurance
+Premium: ₹500 - ₹5,000 per trip
+Coverage Amount: ₹1,00,000 - ₹50,00,000
+Trip Duration: 1 - 365 days
+Entry Age: 6 months - 70 years
+Eligibility Criteria:
+- Age: 6 months - 70 years
+- Valid passport and visa
+- Travel within policy period
+- No pre-existing critical illnesses
+Required Documents:
+- Passport copy
+- Visa copy
+- Travel itinerary
+- Identity proof (Aadhaar, PAN, Voter ID)
+- Address proof (Utility bill, Bank statement)
+Key Features:
+- Medical expenses abroad
+- Trip cancellation and interruption
+- Baggage loss and delay
+- Personal accident cover
+- Emergency evacuation
+- 24x7 worldwide assistance
+- Cashless treatment
+- Pre-existing condition coverage (with waiting period)
+- Adventure sports coverage
+- Business trip coverage
+- Family travel plans
+Special Offers:
+- 5% premium discount for women
+- 10% premium discount for online purchase
+- Family discount available
+- Multi-trip discount
+- Group travel discount
+- Student discount
+- Senior citizen discount

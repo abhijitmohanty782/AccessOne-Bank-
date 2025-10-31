@@ -1,0 +1,29 @@
+Product Name: Personal Loan
+Category: Loan
+Interest Rate: 10.5% - 18.5% per annum
+Loan Amount: ₹50,000 - ₹50,00,000
+Tenure: 12 - 60 months
+Processing Fee: 2% of loan amount (minimum ₹1,000, maximum ₹10,000)
+Eligibility Criteria: 
+- Age: 21-65 years
+- Minimum monthly income: ₹15,000
+- Minimum CIBIL score: 650
+- Salaried or self-employed
+- Minimum 1 year work experience
+Required Documents:
+- Identity proof (Aadhaar, PAN, Voter ID)
+- Address proof (Utility bill, Bank statement)
+- Income proof (Salary slips, Bank statements)
+- Employment proof (Offer letter, Employment certificate)
+Key Features:
+- Quick approval within 24 hours
+- No collateral required
+- Flexible repayment options
+- Online application process
+- Pre-approved offers for existing customers
+- Balance transfer facility available
+- Part payment and foreclosure options
+Special Offers:
+- 0.5% interest rate discount for women borrowers
+- 0.25% interest rate discount for existing customers
+- No processing fee for loans above ₹5,00,000
