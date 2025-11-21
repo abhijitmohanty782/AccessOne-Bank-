@@ -20,7 +20,12 @@ load_dotenv()
 
 # ---------------------- CONFIG ----------------------
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
+CORS(app, resources={
+    r"/*": {
+        "origins": "https://accessone-bank-nhqs.onrender.com",
+        "supports_credentials": True
+    }
+})
 
 # SECRET for Flask sessions and JWT signing
 app.config["SECRET_KEY"] = os.getenv("FLASK_SECRET_KEY", os.getenv("SECRET_KEY", "change-this-in-prod"))
