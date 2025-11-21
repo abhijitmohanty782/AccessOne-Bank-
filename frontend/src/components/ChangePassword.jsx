@@ -65,7 +65,7 @@ const ChangePassword = () => {
 
     try {
       const token = localStorage.getItem('token')
-      const response = await axios.post('http://localhost:5000/api/auth/change_password', {
+      const response = await axios.post('/api/auth/change_password', {
         old_password: passwordForm.current_password,
         new_password: passwordForm.new_password
       }, {
