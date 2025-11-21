@@ -25,7 +25,7 @@ const ManageAccounts = () => {
   const fetchAccounts = async () => {
     try {
       const token = localStorage.getItem('token')
-      const response = await axios.get('http://localhost:5000/api/user/accounts', {
+      const response = await axios.get('/api/user/accounts', {
         headers: { Authorization: `Bearer ${token}` }
       })
       if (response.status === 200) {
@@ -52,7 +52,7 @@ const ManageAccounts = () => {
 
     try {
       const token = localStorage.getItem('token')
-      const response = await axios.post('http://localhost:5000/api/user/accounts', {
+      const response = await axios.post('/api/user/accounts', {
         account_type: formData.account_type,
         initial_deposit: parseFloat(formData.initial_deposit) || 0,
         purpose: formData.purpose,
