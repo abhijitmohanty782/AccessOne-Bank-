@@ -61,10 +61,14 @@ def _generate_numeric_otp(length: int = 6) -> str:
 
 
 def _send_otp_email(to_email: str, subject: str, body: str):
-    if not app.config.get("MAIL_USERNAME") or not app.config.get("MAIL_PASSWORD"):
-        raise RuntimeError("Mail credentials not configured")
-    msg = Message(subject=subject, recipients=[to_email], body=body)
-    mail.send(msg)
+    # if not app.config.get("MAIL_USERNAME") or not app.config.get("MAIL_PASSWORD"):
+    #     raise RuntimeError("Mail credentials not configured")
+    # msg = Message(subject=subject, recipients=[to_email], body=body)
+    # mail.send(msg)
+    
+    # TEMPORARY: disable email sending to prevent Render worker timeout
+    print("EMAIL SENDING DISABLED — SKIPPING SMTP SEND")
+    return True
 
 
 def _store_otp(email: str, purpose: str, metadata: dict = None, ttl_minutes: int = 10):
