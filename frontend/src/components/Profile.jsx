@@ -32,7 +32,7 @@ const Profile = () => {
   const fetchBalance = async () => {
     try {
       const token = localStorage.getItem('token')
-      const response = await axios.get('http://localhost:5000/api/user/balance', {
+      const response = await axios.get('/api/user/balance', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -64,7 +64,7 @@ const Profile = () => {
 
     try {
       const token = localStorage.getItem('token')
-      const response = await axios.put('http://localhost:5000/api/user/profile', formData, {
+      const response = await axios.put('/api/user/profile', formData, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
