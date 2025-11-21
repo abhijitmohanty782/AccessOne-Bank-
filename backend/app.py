@@ -720,6 +720,11 @@ def transactions_filter():
     except Exception as e:
         print("❌ Error in /api/transactions/filter:", e)
         return jsonify({"error": str(e)}), 500
+        
+@app.route("/test-cors")
+def test_cors():
+    return jsonify({"msg": "CORS OK"})
+
 # ---------------------- START SERVER ----------------------
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 5000))
