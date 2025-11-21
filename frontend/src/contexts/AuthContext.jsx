@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
 
   // Set axios base URL once
   if (!axios.defaults.baseURL) {
-    axios.defaults.baseURL = import.meta.env.REACT_APP_API_BASE_URL;
+    axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL;
   }
 
   // Set up axios interceptor for auth token
