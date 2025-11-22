@@ -510,7 +510,7 @@ def create_user_account():
         result, status = bank_model.create_user_account(
             user_id=request.current_user["_id"],
             account_type=data.get("account_type"),
-            initial_deposit=float(data.get("initial_deposit", 0)),
+            initial_deposit=float(data.get("initial_deposit", 1000)),
             purpose=data.get("purpose"),
             business_name=data.get("business_name"),
             business_type=data.get("business_type"),
