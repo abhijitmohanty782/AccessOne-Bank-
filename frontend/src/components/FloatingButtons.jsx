@@ -355,7 +355,7 @@ export default function FloatingButtons() {
             }}
             className="w-14 h-14 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg flex items-center justify-center"
           >
-            ❓
+            Buddy
           </button>
 
           {isHelperOpen && (
@@ -429,7 +429,7 @@ export default function FloatingButtons() {
             }}
             className="w-14 h-14 bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-lg flex items-center justify-center"
           >
-            💬
+            Chat
           </button>
 
           {isChatOpen && (
