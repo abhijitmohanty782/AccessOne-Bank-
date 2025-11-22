@@ -54,7 +54,7 @@ const ManageAccounts = () => {
       const token = localStorage.getItem('token')
       const response = await axios.post('/api/user/accounts', {
         account_type: formData.account_type,
-        initial_deposit: parseFloat(formData.initial_deposit) || 0,
+        initial_deposit: parseFloat(formData.initial_deposit) || 1000,
         purpose: formData.purpose,
         business_name: formData.business_name,
         business_type: formData.business_type,
