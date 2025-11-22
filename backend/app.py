@@ -1,6 +1,6 @@
 # app.py
 import os
-from datetime import datetime, timedelta, UTC
+from datetime import datetime, timedelta, UTC, time, timezone
 from functools import wraps
 
 from bson import ObjectId
@@ -11,6 +11,10 @@ from flask_mail import Mail, Message
 from flask_pymongo import PyMongo
 import jwt
 import secrets
+import re
+from brevo_python import ApiClient, Configuration, SendSmtpEmail
+from brevo_python.api.transactional_emails_api import TransactionalEmailsApi
+
 
 # Import your model (assumes models.py defines BankingModel)
 from models import BankingModel
@@ -20,12 +24,7 @@ load_dotenv()
 
 # ---------------------- CONFIG ----------------------
 app = Flask(__name__)
-CORS(app, resources={
-    r"/*": {
-        "origins": "https://accessone-bank-nhqs.onrender.com",
-        "supports_credentials": True
-    }
-})
+CORS(app)
 
 # SECRET for Flask sessions and JWT signing
 app.config["SECRET_KEY"] = os.getenv("FLASK_SECRET_KEY", os.getenv("SECRET_KEY", "change-this-in-prod"))
@@ -35,17 +34,48 @@ app.config["MONGO_URI"] = os.getenv("MONGO_URI", "mongodb://localhost:27017/bank
 mongo = PyMongo(app)
 
 # Mail configuration — ensure these env vars are set in your .env
-app.config["MAIL_SERVER"] = os.getenv("MAIL_SERVER", "smtp.gmail.com")
-app.config["MAIL_PORT"] = int(os.getenv("MAIL_PORT", 587))
-app.config["MAIL_USE_TLS"] = os.getenv("MAIL_USE_TLS", "true").lower() == "true"
-app.config["MAIL_USE_SSL"] = os.getenv("MAIL_USE_SSL", "false").lower() == "true"
-app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")            # e.g. official.accessone@gmail.com
-app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")            # app password (DO NOT store real password in repo)
-app.config["MAIL_DEFAULT_SENDER"] = os.getenv("MAIL_DEFAULT_SENDER", app.config["MAIL_USERNAME"])
+# app.config["MAIL_SERVER"] = os.getenv("MAIL_SERVER", "smtp.gmail.com")
+# app.config["MAIL_PORT"] = int(os.getenv("MAIL_PORT", 587))
+# app.config["MAIL_USE_TLS"] = os.getenv("MAIL_USE_TLS", "true").lower() == "true"
+# app.config["MAIL_USE_SSL"] = os.getenv("MAIL_USE_SSL", "false").lower() == "true"
+# app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")            # e.g. official.accessone@gmail.com
+# app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")            # app password (DO NOT store real password in repo)
+# app.config["MAIL_DEFAULT_SENDER"] = os.getenv("MAIL_DEFAULT_SENDER", app.config["MAIL_USERNAME"])
 
-mail = Mail(app)
+# mail = Mail(app)
+
+BREVO_API_KEY = os.getenv("BREVO_API_KEY") 
+BREVO_SENDER_EMAIL = os.getenv("MAIL_DEFAULT_SENDER", os.getenv("MAIL_USERNAME")) 
 
 # Initialize model (BankingModel should accept the db object)
+# Initialize Brevo Client
+brevo_client: TransactionalEmailsApi | None = None
+
+# Log configuration status
+if BREVO_API_KEY:
+    app.logger.info(f"BREVO_API_KEY found: {BREVO_API_KEY[:10]}..." if len(BREVO_API_KEY) > 10 else "BREVO_API_KEY found")
+else:
+    app.logger.warning("WARNING: BREVO_API_KEY not found in environment variables. Email sending will fail.")
+
+if BREVO_SENDER_EMAIL:
+    app.logger.info(f"BREVO_SENDER_EMAIL: {BREVO_SENDER_EMAIL}")
+else:
+    app.logger.warning("WARNING: BREVO_SENDER_EMAIL (MAIL_DEFAULT_SENDER) not found. Email sending will fail.")
+
+if BREVO_API_KEY:
+    try:
+        configuration = Configuration()
+        configuration.api_key['api-key'] = BREVO_API_KEY
+        # Initialize the API Client with the configured key
+        api_client = ApiClient(configuration)
+        brevo_client = TransactionalEmailsApi(api_client)
+        app.logger.info("✅ Brevo API client initialized successfully.")
+    except Exception as e:
+        app.logger.error(f"❌ Failed to initialize Brevo client: {type(e).__name__}: {e}")
+        brevo_client = None
+else:
+    app.logger.warning("WARNING: BREVO_API_KEY not found. Email sending will fail.")
+
 bank_model = BankingModel(mongo.db)
 
 # JWT settings
@@ -61,14 +91,76 @@ def _generate_numeric_otp(length: int = 6) -> str:
 
 
 def _send_otp_email(to_email: str, subject: str, body: str):
-    # if not app.config.get("MAIL_USERNAME") or not app.config.get("MAIL_PASSWORD"):
-    #     raise RuntimeError("Mail credentials not configured")
-    # msg = Message(subject=subject, recipients=[to_email], body=body)
-    # mail.send(msg)
+    """
+    Sends email using the Brevo Transactional Email API (HTTPS).
+    """
+    if not brevo_client:
+        error_msg = "Brevo API client not configured. Check BREVO_API_KEY and SENDER_EMAIL."
+        app.logger.error(error_msg)
+        raise RuntimeError(error_msg)
     
-    # TEMPORARY: disable email sending to prevent Render worker timeout
-    print("EMAIL SENDING DISABLED — SKIPPING SMTP SEND")
-    return True
+    if not BREVO_SENDER_EMAIL:
+        error_msg = "Sender email (MAIL_DEFAULT_SENDER) not configured."
+        app.logger.error(error_msg)
+        raise RuntimeError(error_msg)
+
+    try:
+        # Extract OTP code from body for HTML content (more robust extraction)
+        # Body format: "Your verification code is 123456. It expires in 10 minutes."
+        otp_match = re.search(r'\b\d{6}\b', body)
+        otp_code = otp_match.group(0) if otp_match else body.split()[-1].strip('.')
+        
+        # Create the email payload
+        send_smtp_email = SendSmtpEmail(
+            sender={"email": BREVO_SENDER_EMAIL, "name": "Banking App"},
+            to=[{"email": to_email}],
+            subject=subject,
+            text_content=body,  # Use textContent for plain text OTP
+            # Provide HTML content for better formatting in email clients
+            html_content=f"""<html>
+                <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+                    <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+                        <h2 style="color: #2c3e50;">Verification Code</h2>
+                        <p>Hello,</p>
+                        <p>Your verification code is:</p>
+                        <div style="background-color: #f4f4f4; padding: 15px; text-align: center; font-size: 24px; font-weight: bold; letter-spacing: 3px; margin: 20px 0; border-radius: 5px;">
+                            {otp_code}
+                        </div>
+                        <p>Please use this code to complete your action. This code expires in 10 minutes.</p>
+                        <p>If you didn't request this code, please ignore this email.</p>
+                        <p>Thank you,<br>Banking App Team</p>
+                    </div>
+                </body>
+            </html>"""
+        )
+        
+        # Send the email via API and capture response
+        app.logger.info(f"Attempting to send OTP email to {to_email} via Brevo...")
+        response = brevo_client.send_transac_email(send_smtp_email)
+        
+        # Log successful response
+        app.logger.info(f"Brevo API response: {response}")
+        app.logger.info(f"OTP email sent successfully to {to_email}")
+        
+        return response
+
+    except Exception as e:
+        # Log detailed error information
+        error_detail = str(e)
+        app.logger.error(f"Brevo API failed to send email to {to_email}")
+        app.logger.error(f"Error type: {type(e).__name__}")
+        app.logger.error(f"Error message: {error_detail}")
+        
+        # Check for specific Brevo API errors
+        if "api-key" in error_detail.lower() or "unauthorized" in error_detail.lower():
+            raise RuntimeError("Invalid Brevo API key. Please check BREVO_API_KEY in your environment variables.")
+        elif "sender" in error_detail.lower() or "from" in error_detail.lower():
+            raise RuntimeError(f"Invalid sender email. Please verify {BREVO_SENDER_EMAIL} is verified in your Brevo account.")
+        elif "quota" in error_detail.lower() or "limit" in error_detail.lower():
+            raise RuntimeError("Brevo email quota exceeded. Please check your Brevo account limits.")
+        else:
+            raise RuntimeError(f"Failed to send OTP email via Brevo API: {error_detail}")
+
 
 
 def _store_otp(email: str, purpose: str, metadata: dict = None, ttl_minutes: int = 10):
@@ -133,6 +225,7 @@ def _verify_and_consume_otp(email: str, purpose: str, code: str):
     # --- Success: consume OTP ---
     mongo.db.otps.delete_one({"_id": record["_id"]})
     return True, record
+
 
 
 def _user_doc_to_public(user_doc: dict) -> dict:
@@ -202,6 +295,22 @@ def require_auth(f):
         return f(*args, **kwargs)
     return decorated_function
 
+
+# ---------------------- HEALTH CHECK ----------------------
+@app.route("/api/health", methods=["GET"])
+def health_check():
+    """Health check endpoint to verify Brevo configuration"""
+    health_status = {
+        "status": "ok",
+        "brevo_configured": brevo_client is not None,
+        "brevo_api_key_set": bool(BREVO_API_KEY),
+        "sender_email_set": bool(BREVO_SENDER_EMAIL),
+        "sender_email": BREVO_SENDER_EMAIL if BREVO_SENDER_EMAIL else None
+    }
+    if not health_status["brevo_configured"]:
+        health_status["status"] = "warning"
+        health_status["message"] = "Brevo email service not configured. OTP emails will fail."
+    return jsonify(health_status), 200
 
 # ---------------------- BASE ROUTE ----------------------
 @app.route("/")
@@ -282,14 +391,26 @@ def register_initiate():
                 subject="Your Registration OTP",
                 body=f"Your verification code is {otp_record['code']}. It expires in 10 minutes."
             )
+        except RuntimeError as e:
+            # remove OTP if email sending failed
+            mongo.db.otps.delete_one({"_id": otp_record["_id"]})
+            error_message = str(e)
+            app.logger.error(f"Failed to send OTP email to {data['email']}: {error_message}")
+            return jsonify({"error": error_message, "detail": "Please check your email configuration and Brevo API settings."}), 500
         except Exception as e:
             # remove OTP if email sending failed
             mongo.db.otps.delete_one({"_id": otp_record["_id"]})
-            return jsonify({"error": "Failed to send OTP email", "detail": str(e)}), 500
+            error_message = f"Failed to send OTP email: {str(e)}"
+            app.logger.error(f"Unexpected error sending OTP to {data['email']}: {error_message}")
+            return jsonify({"error": error_message}), 500
 
         return jsonify({"message": "OTP sent to email"}), 200
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        error_message = str(e)
+        error_type = type(e).__name__
+        app.logger.error(f"Error in register_initiate: {error_type}: {error_message}")
+        app.logger.exception(e)  # Log full traceback
+        return jsonify({"error": error_message, "type": error_type}), 500
 
 
 @app.route("/api/auth/register/verify", methods=["POST"])
@@ -724,11 +845,36 @@ def transactions_filter():
     except Exception as e:
         print("❌ Error in /api/transactions/filter:", e)
         return jsonify({"error": str(e)}), 500
-        
-@app.route("/test-cors")
-def test_cors():
-    return jsonify({"msg": "CORS OK"})
 
+
+# ---------------------- CHAT NAVIGATION HELPER ----------------------
+@app.route("/api/chat", methods=["POST"])
+def chat_navigate():
+    try:
+        data = request.get_json(silent=True) or {}
+        text = (data.get("query") or data.get("message") or "").strip()
+        navigate_path = None
+
+        # 1) Full URL like http(s)://localhost:3000/... → extract the path
+        m = re.search(r"https?://localhost:3000(?P<path>/[\w\-./?=&%]*)?", text)
+        if m:
+            navigate_path = m.group("path") or "/"
+        # 2) Bare SPA path starting with '/' → accept directly
+        elif text.startswith("/"):
+            navigate_path = text
+
+        # If nothing matched, simply echo back
+        if navigate_path:
+            return jsonify({
+                "answer": f"Navigating to {navigate_path}",
+                "navigate_path": navigate_path
+            }), 200
+        else:
+            return jsonify({
+                "answer": "I did not detect a route. Paste a link like http://localhost:3000/payments/transfer or a path like /payments/transfer."
+            }), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 # ---------------------- START SERVER ----------------------
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 5000))
