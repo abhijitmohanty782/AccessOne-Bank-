@@ -44,12 +44,13 @@ import CreditCardDetails from './pages/CreditCardDetails'
 import ApplyCard from './pages/ApplyCard'
 import BlockCard from './pages/BlockCard'
 import ChequeBookRequest from './pages/ChequeBookRequest'
+import RatesCharges from './pages/RatesCharges'
 
 function App() {
   return (
     <AuthProvider>
       <Router>
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-teal-50 to-white">
           <Header />
           <FloatingButtons />
           <Routes>
@@ -57,6 +58,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<LoginForm />} />
             <Route path="/register" element={<RegisterForm />} />
+            <Route path="/rates-charges" element={<RatesCharges />} />
             
             {/* Protected Routes */}
             <Route 

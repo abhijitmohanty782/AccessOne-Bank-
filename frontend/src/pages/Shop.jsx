@@ -4,14 +4,14 @@ const CategoryCard = ({ href, icon, title, description, bgColor }) => (
     href={href}
     target="_blank"
     rel="noopener noreferrer"
-    className={`group rounded-xl p-6 shadow-lg transform transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl ${bgColor} flex flex-col justify-between h-full`}
+    className={`group rounded-xl p-4 sm:p-6 shadow-lg transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl ${bgColor} flex flex-col justify-between h-full min-h-[200px]`}
   >
     <div>
-      <div className={`text-4xl mb-4`}>{icon}</div>
-      <h3 className="text-xl font-bold text-gray-800 mb-2">{title}</h3>
-      <p className="text-gray-600 text-sm">{description}</p>
+      <div className={`text-3xl sm:text-4xl mb-3 sm:mb-4`}>{icon}</div>
+      <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2">{title}</h3>
+      <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">{description}</p>
     </div>
-    <div className={`mt-4 text-right font-semibold text-gray-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300`}>
+    <div className={`mt-4 text-right font-semibold text-gray-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-sm sm:text-base`}>
       Shop Now &rarr;
     </div>
   </a>
@@ -57,17 +57,17 @@ const Shop = () => {
   ];
 
   return (
-    <div className="bg-gray-50 min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8 font-sans">
-      <div className="w-full max-w-5xl mx-auto text-center">
-        <div className="mb-8">
-            <span className="text-5xl">🛒</span>
-            <h1 className="text-4xl font-extrabold text-gray-800 mt-4">Shop & Order</h1>
-            <p className="text-lg text-gray-500 mt-2">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-teal-50 to-white flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8 font-sans">
+      <div className="w-full max-w-7xl mx-auto text-center">
+        <div className="mb-8 sm:mb-12">
+            <span className="text-4xl sm:text-5xl md:text-6xl">🛒</span>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-800 mt-4">Shop & Order</h1>
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 mt-2 px-4">
                 Shop for products and services directly from your banking app.
             </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
           {categories.map((category) => (
             <CategoryCard key={category.title} {...category} />
           ))}
