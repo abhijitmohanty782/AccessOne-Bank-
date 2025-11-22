@@ -1,78 +1,130 @@
 {
+  "dashboard": {
+    "url": "https://accessone-bank-nhqs.onrender.com/dashboard",
+    "description": "Shows user dashboard including balance, accounts and quick actions"
+  },
   "accounts": {
-    "url": "http://localhost:3001/accounts",
-    "description": "Displays user account details like account number, balance, and transaction history."
+    "url": "https://accessone-bank-nhqs.onrender.com/accounts",
+    "description": "Displays and manages user bank accounts"
   },
-  "apply for a new card": {
-    "url": "http://localhost:3001/cards/apply",
-    "description": "Allows users to apply for new debit or credit cards online by filling out a simple form."
+  "profile update": {
+    "url": "https://accessone-bank-nhqs.onrender.com/profile/update",
+    "description": "Update your personal profile information"
   },
-  "apply for a car loan": {
-    "url": "http://localhost:3001/loans/car",
-    "description": "Page to apply for a car loan; collects details like car type, loan amount, and tenure."
+  "manage accounts": {
+    "url": "https://accessone-bank-nhqs.onrender.com/profile/manage-accounts",
+    "description": "Create and manage Savings or Current bank accounts"
   },
-  "apply for educational loan": {
-    "url": "http://localhost:3001/loans/education",
-    "description": "Used by students or parents to apply for education loans, including course and institution details."
+  "change password": {
+    "url": "https://accessone-bank-nhqs.onrender.com/profile/change-password",
+    "description": "Allows user to change login password"
   },
-  "apply for general insurance": {
-    "url": "http://localhost:3001/insurance/general",
-    "description": "Lets users purchase or apply for general insurance policies for property, health, or travel."
-  },
-  "apply for home loan": {
-    "url": "http://localhost:3001/loans/home",
-    "description": "Dedicated page for home loan applications; includes loan amount, property details, and EMI options."
-  },
-  "apply for life insurance": {
-    "url": "http://localhost:3001/insurance/life",
-    "description": "For applying to life insurance plans with premium, policy term, and beneficiary details."
-  },
-  "apply for personal loan": {
-    "url": "http://localhost:3001/loans/personal",
-    "description": "Handles personal loan applications, verifying user eligibility and loan requirements."
-  },
-  "apply for block the card": {
-    "url": "http://localhost:3001/cards/block",
-    "description": "Allows users to block their debit or credit card in case of loss or fraud instantly."
-  },
-  "request for cheque book": {
-    "url": "http://localhost:3001/services/cheque-book",
-    "description": "Users can request a new cheque book by selecting account and delivery address."
-  },
-  "see the credit card details": {
-    "url": "http://localhost:3001/cards/details",
-    "description": "Displays user’s existing credit card details, usage summary, and payment due information."
-  },
-  "apply for fixed deposit": {
-    "url": "http://localhost:3001/fixed-deposit",
-    "description": "Enables users to open or manage Fixed Deposit accounts and calculate interest."
-  },
-  "for purchasing the gold": {
-    "url": "http://localhost:3001/investments/gold",
-    "description": "Lets users buy or invest in digital gold with real-time price updates."
-  },
-  "investments": {
-    "url": "http://localhost:3001/investments",
-    "description": "Displays all user investments like mutual funds, fixed deposits, and recurring deposits."
-  },
-  "loans": {
-    "url": "http://localhost:3001/loans",
-    "description": "Summary of all user loans (car, home, personal) with EMI and repayment status."
-  },
-  "mutual funds": {
-    "url": "http://localhost:3001/mutual-funds",
-    "description": "Shows mutual fund plans, allows users to invest, redeem, or track NAV performance."
-  },
-  "nominee update details": {
-    "url": "http://localhost:3001/services/nominee-update",
-    "description": "Allows users to update or add a nominee for their bank accounts or insurance policies."
+  "security settings": {
+    "url": "https://accessone-bank-nhqs.onrender.com/profile/security",
+    "description": "Advanced security settings for user account"
   },
   "payments": {
-    "url": "http://localhost:3001/payments",
-    "description": "Central payment dashboard for transferring money, paying bills, and checking payment history."
+    "url": "https://accessone-bank-nhqs.onrender.com/payments",
+    "description": "Central hub for sending and receiving payments"
+  },
+  "transfer money": {
+    "url": "https://accessone-bank-nhqs.onrender.com/payments/transfer",
+    "description": "Send money to beneficiaries or other bank accounts"
+  },
+  "beneficiaries": {
+    "url": "https://accessone-bank-nhqs.onrender.com/payments/beneficiaries",
+    "description": "Add or manage beneficiaries for money transfers"
+  },
+  "transaction history": {
+    "url": "https://accessone-bank-nhqs.onrender.com/payments/history",
+    "description": "View all past transactions"
+  },
+  "advanced transaction history": {
+    "url": "https://accessone-bank-nhqs.onrender.com/payments/history/advanced",
+    "description": "Filter transactions by date, account and transaction type"
+  },
+  "account overview": {
+    "url": "https://accessone-bank-nhqs.onrender.com/payments/overview",
+    "description": "Detailed account analytics and summaries"
+  },
+  "account statement": {
+    "url": "https://accessone-bank-nhqs.onrender.com/payments/statement",
+    "description": "Download or view bank statements with OTP verification"
+  },
+  "loans": {
+    "url": "https://accessone-bank-nhqs.onrender.com/loans",
+    "description": "Bank loan dashboard"
+  },
+  "apply for personal loan": {
+    "url": "https://accessone-bank-nhqs.onrender.com/loans/personal",
+    "description": "Apply for a personal loan"
+  },
+  "apply for home loan": {
+    "url": "https://accessone-bank-nhqs.onrender.com/loans/home",
+    "description": "Apply for a home loan"
+  },
+  "apply for educational loan": {
+    "url": "https://accessone-bank-nhqs.onrender.com/loans/education",
+    "description": "Apply for an educational loan"
+  },
+  "apply for car loan": {
+    "url": "https://accessone-bank-nhqs.onrender.com/loans/car",
+    "description": "Apply for a car loan"
+  },
+  "cards": {
+    "url": "https://accessone-bank-nhqs.onrender.com/cards",
+    "description": "Manage debit and credit cards"
+  },
+  "apply for new card": {
+    "url": "https://accessone-bank-nhqs.onrender.com/cards/apply",
+    "description": "Apply for a new debit or credit card"
+  },
+  "block the card": {
+    "url": "https://accessone-bank-nhqs.onrender.com/cards/block",
+    "description": "Block a lost or stolen debit/credit card"
+  },
+  "see credit card details": {
+    "url": "https://accessone-bank-nhqs.onrender.com/cards/details",
+    "description": "Shows user’s linked credit card details and statements"
+  },
+  "fixed deposit": {
+    "url": "https://accessone-bank-nhqs.onrender.com/fixed-deposit",
+    "description": "Open or manage fixed deposit investments"
+  },
+  "investments": {
+    "url": "https://accessone-bank-nhqs.onrender.com/investments",
+    "description": "Investment dashboard"
+  },
+  "purchase gold": {
+    "url": "https://accessone-bank-nhqs.onrender.com/investments/gold",
+    "description": "Buy and track digital gold"
+  },
+  "mutual funds": {
+    "url": "https://accessone-bank-nhqs.onrender.com/mutual-funds",
+    "description": "View and invest in mutual fund plans"
+  },
+  "insurance": {
+    "url": "https://accessone-bank-nhqs.onrender.com/insurance",
+    "description": "Insurance dashboard"
+  },
+  "apply for life insurance": {
+    "url": "https://accessone-bank-nhqs.onrender.com/insurance/life",
+    "description": "Apply for life insurance plans"
+  },
+  "apply for general insurance": {
+    "url": "https://accessone-bank-nhqs.onrender.com/insurance/general",
+    "description": "Apply for health/travel/general insurance"
   },
   "services": {
-    "url": "http://localhost:3001/services",
-    "description": "General banking services such as card replacement, address change, or account upgrades."
+    "url": "https://accessone-bank-nhqs.onrender.com/services",
+    "description": "General banking service actions"
+  },
+  "request cheque book": {
+    "url": "https://accessone-bank-nhqs.onrender.com/services/cheque-book",
+    "description": "Request a cheque book for a selected account"
+  },
+  "nominee update": {
+    "url": "https://accessone-bank-nhqs.onrender.com/services/nominee-update",
+    "description": "Add or update a nominee for bank accounts"
   }
 }
