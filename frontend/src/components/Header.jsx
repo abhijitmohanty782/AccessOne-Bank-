@@ -112,9 +112,10 @@ const Header = () => {
                   </button>
                   {activeDropdown === 'accounts' && (
                     <div className="ml-4 space-y-1">
-                      <Link to="/payments/overview" className="block text-gray-700 hover:text-primary-600 py-1" onClick={closeNavbar}>Account Overview</Link>
+                      {/*<Link to="/payments/overview" className="block text-gray-700 hover:text-primary-600 py-1" onClick={closeNavbar}>Account Overview</Link>
                       <Link to="/payments/statement" className="block text-gray-700 hover:text-primary-600 py-1" onClick={closeNavbar}>Account Statements</Link>
                       <Link to="/payments/history" className="block text-gray-700 hover:text-primary-600 py-1" onClick={closeNavbar}>Transaction History</Link>
+                      */}
                       <Link to="/payments/history/advanced" className="block text-gray-700 hover:text-primary-600 py-1" onClick={closeNavbar}>Advanced Transaction History</Link>
                     </div>
                   )}
