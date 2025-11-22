@@ -7,4 +7,5 @@ python-dotenv==1.0.0
 gunicorn==21.2.0
 python-dateutil==2.8.2
 email-validator==2.0.0
-PyJWT==2.9.0
+PyJWT==2.8.0
+brevo-python==1.0.0
