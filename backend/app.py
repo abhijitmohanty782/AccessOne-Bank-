@@ -510,7 +510,7 @@ def create_user_account():
         result, status = bank_model.create_user_account(
             user_id=request.current_user["_id"],
             account_type=data.get("account_type"),
-            initial_deposit=float(data.get("initial_deposit", 1000)),
+            initial_deposit=float(data.get("initial_deposit", 0)),
             purpose=data.get("purpose"),
             business_name=data.get("business_name"),
             business_type=data.get("business_type"),
@@ -741,8 +741,8 @@ def transfer_verify():
 
         # insert transaction record
         mongo.db.transactions.insert_one({
-            "user_id": user["_id"],
-            "beneficiary_id": beneficiary["_id"],
+            "user_account_id": ObjectId(from_acc["_id"]),
+            "beneficiary_account_id": ObjectId(beneficiary["_id"]),
             "amount": amount,
             "transfer_mode": pending["transfer_mode"],
             "created_at": datetime.now(UTC)
@@ -767,36 +767,48 @@ def transactions():
 @require_auth
 def transactions_filter():
     try:
+        print("\n================= /api/transactions/filter CALLED =================")
+
         user = request.current_user
+        print(f"🔐 Authenticated User: {user}")
+
         user_id_str = str(user["_id"])
         user_id_obj = ObjectId(user_id_str) if ObjectId.is_valid(user_id_str) else user_id_str
+        print(f"🆔 User ObjectId: {user_id_obj}")
 
         account_number = request.args.get("account_number")
         ttype = request.args.get("type", "all")  # all, debit, credit
         start_date = request.args.get("start_date")
         end_date = request.args.get("end_date")
 
-        # ✅ Step 1: Find user's account(s)
+        print(f"📥 Incoming Query Params → account_number={account_number}, type={ttype}, start={start_date}, end={end_date}")
+
+        # Step 1: Find user's account(s)
         account_query = {"user_id": {"$in": [user_id_str, user_id_obj]}}
         if account_number:
             account_query["account_number"] = account_number
 
+        print(f"🔍 Account Query: {account_query}")
+
         accounts = list(mongo.db.accounts.find(account_query))
+        print(f"🏦 Accounts Found: {len(accounts)} → {[str(a['_id']) for a in accounts]}")
+
         if not accounts:
+            print("⚠️ No accounts found for this user.")
             return jsonify({"transactions": [], "message": "No account found"}), 200
 
         account_ids = [a["_id"] for a in accounts]
-        print(f"✅ Found user accounts: {[str(a['_id']) for a in accounts]}")
 
-        # ✅ Step 2: Build transaction query
+        # Step 2: Build transaction query
         q = {
             "$or": [
                 {"user_account_id": {"$in": account_ids}},
                 {"beneficiary_account_id": {"$in": account_ids}},
             ]
         }
+        print(f"🔎 Base Transaction Query: {q}")
 
-        # ✅ Step 3: Date filter
+        # Step 3: Date filter
         if start_date and end_date:
             try:
                 sdate = datetime.strptime(start_date, "%Y-%m-%d").date()
@@ -804,47 +816,56 @@ def transactions_filter():
                 start_dt = datetime.combine(sdate, time.min, tzinfo=timezone.utc)
                 end_dt = datetime.combine(edate, time.max, tzinfo=timezone.utc)
                 q["timestamp"] = {"$gte": start_dt, "$lte": end_dt}
-                print(f"📅 Date range: {start_dt} → {end_dt}")
+                print(f"📅 Applied Date Range Filter: {start_dt} → {end_dt}")
             except Exception as e:
                 print(f"⚠️ Invalid date filter: {e}")
 
-        # ✅ Step 4: Fetch transactions
+        print(f"📝 FINAL Mongo Transaction Query: {q}")
+
+        # Step 4: Fetch transactions
         txs = list(mongo.db.transactions.find(q).sort("timestamp", -1))
-        print(f"📊 Found {len(txs)} transactions")
+        print(f"📊 Transactions Fetched: {len(txs)}")
 
         formatted = []
         for t in txs:
-            # Convert ObjectId → str
+            print(f"\n🔹 Raw Transaction: {t}")
+
             t["_id"] = str(t["_id"])
             if isinstance(t.get("user_account_id"), ObjectId):
                 t["user_account_id"] = str(t["user_account_id"])
             if isinstance(t.get("beneficiary_account_id"), ObjectId):
                 t["beneficiary_account_id"] = str(t["beneficiary_account_id"])
 
-            # Determine debit/credit relative to user's accounts
-            ttype_calc = "credit" if ObjectId(t.get("beneficiary_account_id")) in account_ids else "debit"
+            # Determine type
+            is_credit = ObjectId(t.get("beneficiary_account_id")) in account_ids
+            ttype_calc = "credit" if is_credit else "debit"
             t["type"] = ttype_calc
+            print(f"📌 Determined Type: {ttype_calc}")
 
-            # Format timestamp nicely
             if isinstance(t.get("timestamp"), datetime):
                 t["timestamp"] = t["timestamp"].strftime("%Y-%m-%d %H:%M:%S")
 
-            # Attach the account number for clarity
             src_acc = next((a for a in accounts if str(a["_id"]) == t.get("user_account_id")), None)
             ben_acc = next((a for a in accounts if str(a["_id"]) == t.get("beneficiary_account_id")), None)
             t["account_number"] = src_acc["account_number"] if src_acc else (ben_acc["account_number"] if ben_acc else "-")
 
+            print(f"🏷️ Final Transaction Item: {t}")
             formatted.append(t)
 
-        # ✅ Step 5: Filter by type if needed
+        # Step 5: Type filter
         if ttype in ["credit", "debit"]:
+            print(f"🔽 Filtering Only {ttype.upper()} transactions")
             formatted = [t for t in formatted if t["type"] == ttype]
+
+        print(f"✅ Final Returned Transactions: {len(formatted)}")
 
         return jsonify({"transactions": formatted}), 200
 
     except Exception as e:
         print("❌ Error in /api/transactions/filter:", e)
         return jsonify({"error": str(e)}), 500
+
+
 
 
 # ---------------------- CHAT NAVIGATION HELPER ----------------------
