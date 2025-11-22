@@ -117,8 +117,8 @@ export default function FloatingButtons() {
     {
       id: 1,
       sender: "assistant",
-      text: "Hello! I'm your banking assistant. How can I help you today?",
-      english: "Hello! I'm your banking assistant. How can I help you today?",
+      text: "Hello! I'm your banking navigator. I can help you navigate to a page as per your requirements",
+      english: "Hello! I'm your banking navigator. I can help you navigate to a page as per your requirements",
     },
   ]);
   const [helperHistory, setHelperHistory] = useState([]);
@@ -361,7 +361,7 @@ export default function FloatingButtons() {
           {isHelperOpen && (
             <div className="absolute bottom-full right-0 mb-4 w-96 bg-white rounded-lg shadow-xl border">
             <div className="flex items-center justify-between p-3 border-b">
-              <h3 className="text-lg font-semibold">Banking Helper</h3>
+              <h3 className="text-lg font-semibold">Banking Navigator</h3>
 
               <select
                 value={helperLanguage}
