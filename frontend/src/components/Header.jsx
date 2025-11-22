@@ -78,7 +78,7 @@ const Header = () => {
       dropdown: [
         { name: "Transfer Money", path: "/payments/transfer" },
         { name: "Bill Payments", path: "/payments" },
-        { name: "Transaction History", path: "/payments/history" },
+        { name: "Transaction History", path: "/payments/history/advanced" },
         { name: "Account Overview", path: "/payments/overview" },
         { name: "Account Statement", path: "/payments/statement" },
       ],
