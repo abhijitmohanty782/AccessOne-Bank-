@@ -1,15 +1,8 @@
 {
-  "dashboard": {
-    "url": "https://accessone-bank-nhqs.onrender.com/dashboard",
-    "description": "Shows user dashboard including balance, accounts and quick actions"
-  },
+  
   "accounts": {
-    "url": "https://accessone-bank-nhqs.onrender.com/accounts",
-    "description": "Displays and manages user bank accounts"
-  },
-  "profile update": {
-    "url": "https://accessone-bank-nhqs.onrender.com/profile/update",
-    "description": "Update your personal profile information"
+    "url": "https://accessone-bank-nhqs.onrender.com/profile/manage-accounts",
+    "description": "Displays and manages user bank accounts, including balance or money"
   },
   "manage accounts": {
     "url": "https://accessone-bank-nhqs.onrender.com/profile/manage-accounts",
@@ -19,12 +12,8 @@
     "url": "https://accessone-bank-nhqs.onrender.com/profile/change-password",
     "description": "Allows user to change login password"
   },
-  "security settings": {
-    "url": "https://accessone-bank-nhqs.onrender.com/profile/security",
-    "description": "Advanced security settings for user account"
-  },
   "payments": {
-    "url": "https://accessone-bank-nhqs.onrender.com/payments",
+    "url": "https://accessone-bank-nhqs.onrender.com/payments/transfer",
     "description": "Central hub for sending and receiving payments"
   },
   "transfer money": {
@@ -35,25 +24,9 @@
     "url": "https://accessone-bank-nhqs.onrender.com/payments/beneficiaries",
     "description": "Add or manage beneficiaries for money transfers"
   },
-  "transaction history": {
-    "url": "https://accessone-bank-nhqs.onrender.com/payments/history",
-    "description": "View all past transactions"
-  },
   "advanced transaction history": {
     "url": "https://accessone-bank-nhqs.onrender.com/payments/history/advanced",
-    "description": "Filter transactions by date, account and transaction type"
-  },
-  "account overview": {
-    "url": "https://accessone-bank-nhqs.onrender.com/payments/overview",
-    "description": "Detailed account analytics and summaries"
-  },
-  "account statement": {
-    "url": "https://accessone-bank-nhqs.onrender.com/payments/statement",
-    "description": "Download or view bank statements with OTP verification"
-  },
-  "loans": {
-    "url": "https://accessone-bank-nhqs.onrender.com/loans",
-    "description": "Bank loan dashboard"
+    "description": "Filter transactions by date, account and transaction type and bank statement"
   },
   "apply for personal loan": {
     "url": "https://accessone-bank-nhqs.onrender.com/loans/personal",
