@@ -183,7 +183,7 @@ export default function FloatingButtons() {
       let backendReply = null;
 
       try {
-        const res = await fetch("https://accessone-bank.onrender.com/chatbot/chat", {
+        const res = await fetch("https://accessone-bank-assistants.onrender.com/chatbot/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ query: text ,history:chatHistory}),
@@ -284,7 +284,7 @@ export default function FloatingButtons() {
       let backendReply = null;
 
       try {
-        const res = await fetch("https://accessone-bank.onrender.com/helper/chat", {
+        const res = await fetch("https://accessone-bank-assistants.onrender.com/helper/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ query: text ,history:helperHistory}),
