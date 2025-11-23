@@ -4,9 +4,9 @@
 
 **A Multilingual Conversational + Navigation Assistant for Digital Banking**
 
-![Live Demo](https://img.shields.io/badge/Live_Demo-AccessOne-00C896?style=for-the-badge&logo=google-chrome&logoColor=white)
-![Video Demo](https://img.shields.io/badge/Video_Demo-Watch_Now-FF0000?style=for-the-badge&logo=youtube&logoColor=white)
-![GitHub](https://img.shields.io/badge/GitHub-Repo-181717?style=for-the-badge&logo=github&logoColor=white)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-AccessOne-00C896?style=for-the-badge&logo=google-chrome&logoColor=white)](https://accessone-bank-nhqs.onrender.com)
+[![Video Demo](https://img.shields.io/badge/Video_Demo-Watch_Now-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://drive.google.com/file/d/1yaDQDBJfuxdQWV6FoGQ910fy6l-BMhx7/view?usp=sharing)
+[![GitHub](https://img.shields.io/badge/GitHub-Repo-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/abhijitmohanty782/AccessOne-Bank-)
 
 ---
 
@@ -134,4 +134,5 @@ A production-grade stack ensuring speed, scalability, and robustness.
 2. **Arijit Pal** [LinkedIn](https://www.linkedin.com/in/arijit-pal-op/) | [GitHub](https://github.com/griffinArijit)
 3. **Raunak Sarkar** [LinkedIn](http://www.linkedin.com/in/raunak-sarkar-424a4425b) | [GitHub](https://github.com/Raunak-Sarkar)
 4. **Pasagadugula Swathi Siva Durga** [LinkedIn](https://www.linkedin.com/in/swathi-pasagadugula-9b4a70265/) | [GitHub](https://github.com/swath28)
+
 
