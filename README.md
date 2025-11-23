@@ -42,16 +42,24 @@ Supports **Speech-to-Text** and **Text-to-Speech**, allowing users to operate th
 
 ### The Intelligent Dashboard
 *A clean overview of accounts, balances, and recent activities.*
-![Dashboard](screenshots/dashboard.png)
+<div align="center">
+  <img src="screenshots/dashboard.png" width="80%" alt="Dashboard" />
+</div>
+<br>
 
 ### AI Assistant & Navigator
 *The conversational assistant explaining concepts and guiding navigation.*
-![AI Chatbot](screenshots/ai-assistant.png)
-![Navigator](screenshots/navigator.png)
+<div align="center">
+  <img src="screenshots/ai-assistant.png" width="40%" alt="AI Chatbot" style="margin-right: 10px;" />
+  <img src="screenshots/navigator.png" width="40%" alt="Navigator" />
+</div>
+<br>
 
 ### Advanced Transaction Filtering
 *Filter, search, and manage transaction history with ease.*
-![Transactions](screenshots/transactions.png)
+<div align="center">
+  <img src="screenshots/transactions.png" width="80%" alt="Transactions" />
+</div>
 
 ---
 
@@ -120,5 +128,10 @@ A production-grade stack ensuring speed, scalability, and robustness.
 
 ---
 
-**Created by Abhijit Mohanty**
-[LinkedIn](https://www.linkedin.com/in/abhijit-mohanty-476722253/) | [GitHub](https://github.com/abhijitmohanty782)
+## **Created by Team Pixel**
+
+1. **Abhijit Mohanty** [LinkedIn](https://www.linkedin.com/in/abhijit-mohanty-476722253/) | [GitHub](https://github.com/abhijitmohanty782)
+2. **Arijit Pal** [LinkedIn](https://www.linkedin.com/in/arijit-pal-op/) | [GitHub](https://github.com/griffinArijit)
+3. **Raunak Sarkar** [LinkedIn](http://www.linkedin.com/in/raunak-sarkar-424a4425b) | [GitHub](https://github.com/Raunak-Sarkar)
+4. **Pasagadugula Swathi Siva Durga** [LinkedIn](https://www.linkedin.com/in/swathi-pasagadugula-9b4a70265/) | [GitHub](https://github.com/swath28)
+
